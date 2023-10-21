@@ -11,8 +11,14 @@ project(${PROJECT_NAME} VERSION 1.0 LANGUAGES C CXX)
 #option(BUILD_SHARED_LIBS "build shared libs" OFF)
 
 find_path(OPENSSL_INCLUDE_DIR       NAMES openssl/ssl.h REQUIRED)
-find_library(OPENSSL_CRYPTO_LIBRARY NAMES libcrypto     REQUIRED)
-find_library(OPENSSL_SSL_LIBRARY    NAMES libssl        REQUIRED)
+if(WIN32)
+    find_library(OPENSSL_CRYPTO_LIBRARY NAMES libcrypto     REQUIRED)
+    find_library(OPENSSL_SSL_LIBRARY    NAMES libssl        REQUIRED)
+else()
+    find_library(OPENSSL_CRYPTO_LIBRARY NAMES crypto     REQUIRED)
+    find_library(OPENSSL_SSL_LIBRARY    NAMES ssl        REQUIRED)
+    add_definitions(-DSOCKLEN_T=socklen_t)
+endif()
 
 set(SRC
     BasicUsageEnvironment/BasicHashTable.cpp
