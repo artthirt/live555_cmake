@@ -273,3 +273,16 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 #    PARENT_SCOPE
 #)
 
+install(DIRECTORY
+    BasicUsageEnvironment/include
+    groupsock/include
+    liveMedia/include
+    UsageEnvironment/include
+
+    DESTINATION .
+)
+
+install(TARGETS live555
+    RUNTIME DESTINATION lib/
+)
+
